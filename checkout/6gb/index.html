@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Next Generation Pterodactyl Panel Hosting dengan Anti-DDoS Protection">
+    <meta name="keywords" content="pterodactyl, panel, hosting, discord bot, nodejs, anti-ddos">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>JeromeGPT - Checkout</title>
+    <!-- Google Fonts - Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <!-- Terminal Theme CSS -->
+    <link rel="stylesheet" href="/css/terminal-theme.css">
+</head>
+<body>
+    <!-- Particles.js Background -->
+    <div id="particles-js"></div>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="logo">
+                <i class="fas fa-terminal"></i>
+                <span> JeromeGPT</span>
+            </a>
+            <div class="nav-links">
+                <a href="/" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Beranda</span>
+                </a>
+                <a href="/plans" class="nav-link">
+                    <i class="fas fa-server"></i>
+                    <span>Deploy Server</span>
+                </a>
+            </div>
+            <!-- Theme Switcher -->
+            <div class="theme-switcher">
+                <button id="themeToggle" class="theme-toggle-btn" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                    <span class="theme-label">Dark</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Content -->
+    <main>
+        <section class="checkout-page-terminal">
+            <div class="container">
+                <div class="page-header-terminal">
+                    <div class="page-badge">
+                        <span class="badge-dot"></span> Checkout
+                    </div>
+                    <h1 class="page-title-terminal"> Complete Your <span class="gradient-text">Order</span> </h1>
+                </div>
+                <div class="checkout-wrapper-terminal">
+                    <div class="checkout-form-terminal">
+                        <div class="terminal-card">
+                            <div class="terminal-card-header">
+                                <div class="terminal-buttons">
+                                    <span class="terminal-btn close"></span>
+                                    <span class="terminal-btn minimize"></span>
+                                    <span class="terminal-btn maximize"></span>
+                                </div>
+                                <div class="terminal-title">checkout@jeromegpt:~</div>
+                            </div>
+                            <div class="terminal-card-body">
+                                <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+                                <script>
+                                    // Variabel global status verifikasi
+                                    window.isVerified = false;
+                                    window.turnstileToken = null;
+
+                                    // Callback saat user berhasil diverifikasi (Human)
+                                    function onTurnstileSuccess(token) {
+                                        console.log('Cloudflare Verified. Token:', token);
+                                        window.isVerified = true;
+                                        window.turnstileToken = token;
+                                        // Enable tombol submit
+                                        const btn = document.getElementById('submitBtn');
+                                        btn.disabled = false;
+                                        // Update UI status
+                                        document.getElementById('turnstileStatus').innerHTML = '<i class="fas fa-check-circle" style="color: #48bb78;"></i> Verifikasi Berhasil';
+                                        document.getElementById('turnstileContainer').style.borderColor = 'rgba(72, 187, 120, 0.3)';
+                                    }
+
+                                    // Callback saat error
+                                    function onTurnstileError() {
+                                        console.error('Cloudflare Error');
+                                        window.isVerified = false;
+                                        window.turnstileToken = null;
+                                        document.getElementById('submitBtn').disabled = true;
+                                        document.getElementById('turnstileStatus').innerHTML = '<i class="fas fa-times-circle" style="color: #f56565;"></i> Gagal memuat tantangan';
+                                    }
+
+                                    // Callback saat token expired
+                                    function onTurnstileExpired() {
+                                        console.warn('Token Expired');
+                                        window.isVerified = false;
+                                        window.turnstileToken = null;
+                                        document.getElementById('submitBtn').disabled = true;
+                                        document.getElementById('turnstileStatus').innerHTML = '<i class="fas fa-exclamation-triangle" style="color: #ed8936;"></i> Verifikasi kadaluarsa';
+                                    }
+                                </script>
+                                <form id="checkoutForm">
+                                    <div class="form-group-terminal">
+                                        <label for="username">
+                                            <i class="fas fa-user"></i>
+                                            <span>Username Panel</span>
+                                        </label>
+                                        <input type="text" id="username" name="username" placeholder="contoh: johndoe123" required pattern="[a-z0-9]{3,16}" autocomplete="off">
+                                        <small class="form-hint">
+                                            <i class="fas fa-info-circle"></i> 3-16 karakter, huruf kecil dan angka saja
+                                        </small>
+                                    </div>
+                                    <div class="form-group-terminal">
+                                        <label for="email">
+                                            <i class="fas fa-envelope"></i>
+                                            <span>Email Address</span>
+                                        </label>
+                                        <input type="email" id="email" name="email" placeholder="email@example.com" required autocomplete="email">
+                                        <small class="form-hint">
+                                            <i class="fas fa-info-circle"></i> Data akses akan dikirim ke email ini
+                                        </small>
+                                    </div>
+                                    <div class="form-group-terminal recaptcha-container" id="turnstileContainer">
+                                        <div style="display: flex; justify-content: center; min-height: 65px;">
+                                            <div class="cf-turnstile" data-sitekey="0x4AAAAAACIOoTCHLx6W74Sw" data-theme="dark" data-callback="onTurnstileSuccess" data-error-callback="onTurnstileError" data-expired-callback="onTurnstileExpired">
+                                            </div>
+                                        </div>
+                                        <div id="turnstileStatus" class="recaptcha-status">
+                                            <i class="fas fa-shield-alt"></i> Menunggu verifikasi Cloudflare...
+                                        </div>
+                                    </div>
+                                    <div class="form-group-terminal checkbox-group">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" id="agree" required>
+                                            <span class="checkmark"></span>
+                                            <span class="checkbox-text">Saya setuju dengan syarat dan ketentuan</span>
+                                        </label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-block btn-lg" id="submitBtn" disabled>
+                                        <span>Proceed to Payment</span>
+                                        <i class="fas fa-arrow-right"></i>
+                                    </button>
+                                    <div style="margin-top: 15px; text-align: center;">
+                                        <small style="color: #8a9ba8; font-size: 12px;">
+                                            <i class="fas fa-lock"></i> Transaksi aman dilindungi Cloudflare & SSL
+                                        </small>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order-summary-terminal">
+                        <div class="terminal-card">
+                            <div class="terminal-card-header">
+                                <div class="terminal-buttons">
+                                    <span class="terminal-btn close"></span>
+                                    <span class="terminal-btn minimize"></span>
+                                    <span class="terminal-btn maximize"></span>
+                                </div>
+                                <div class="terminal-title">order-summary.txt</div>
+                            </div>
+                            <div class="terminal-card-body">
+                                <div class="summary-plan-icon">
+                                    <i class="fas fa-server"></i>
+                                </div>
+                                <h3 class="summary-plan-name">6GB</h3>
+                                <div class="summary-price-display">
+                                    <span class="currency">Rp</span>
+                                    <span class="amount">22.000</span>
+                                </div>
+                                <div class="summary-specs-list">
+                                    <div class="summary-spec-item">
+                                        <i class="fas fa-memory"></i>
+                                        <span>6000 MB RAM</span>
+                                    </div>
+                                    <div class="summary-spec-item">
+                                        <i class="fas fa-hdd"></i>
+                                        <span>30000 MB Storage</span>
+                                    </div>
+                                    <div class="summary-spec-item">
+                                        <i class="fas fa-microchip"></i>
+                                        <span>140% CPU</span>
+                                    </div>
+                                </div>
+                                <div class="summary-features-list">
+                                    <div class="summary-feature">
+                                        <i class="fas fa-check"></i>
+                                        <span>5 Database MySQL</span>
+                                    </div>
+                                    <div class="summary-feature">
+                                        <i class="fas fa-check"></i>
+                                        <span>5 Backup Slots</span>
+                                    </div>
+                                    <div class="summary-feature">
+                                        <i class="fas fa-check"></i>
+                                        <span>DDoS Protection</span>
+                                    </div>
+                                    <div class="summary-feature">
+                                        <i class="fas fa-check"></i>
+                                        <span>Instant Activation</span>
+                                    </div>
+                                </div>
+                                <div class="payment-methods-display">
+                                    <h4><i class="fas fa-credit-card"></i> Payment Methods</h4>
+                                    <div class="payment-icons-grid">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Logo_dana_blue.svg/512px-Logo_dana_blue.svg.png" alt="DANA" title="DANA">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Logo_ovo_purple.svg/512px-Logo_ovo_purple.svg.png" alt="OVO" title="OVO">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/8/86/Gopay_logo.svg" alt="GoPay" title="GoPay">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/8/85/LinkAja.svg" alt="LinkAja" title="LinkAja">
+                                    </div>
+                                    <p class="payment-note">
+                                        <i class="fas fa-qrcode"></i> Bayar dengan QRIS dari semua e-wallet & mobile banking
+                                    </p>
+                                </div>
+                                <div class="security-badge-terminal">
+                                    <i class="fas fa-shield-halved"></i>
+                                    <div>
+                                        <strong>Secure Payment</strong>
+                                        <p>SSL encrypted transaction</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <style>
+            /* Styling Container Turnstile */
+            .recaptcha-container {
+                margin: 25px 0;
+                padding: 15px;
+                background: rgba(0, 0, 0, 0.2);
+                border-radius: 8px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                text-align: center;
+                transition: all 0.3s ease;
+            }
+            .recaptcha-status {
+                margin-top: 10px;
+                font-size: 13px;
+                color: #8a9ba8;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+            }
+            #submitBtn:disabled {
+                opacity: 0.6;
+                cursor: not-allowed;
+                filter: grayscale(0.5);
+            }
+            /* Toast Notification */
+            .toast-notification {
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%) translateY(100px);
+                background: #1a202c;
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+                z-index: 9999;
+                opacity: 0;
+                transition: transform 0.3s ease, opacity 0.3s ease;
+                border-left: 4px solid #667eea;
+                max-width: 90%;
+                white-space: nowrap;
+            }
+            .toast-notification.show {
+                transform: translateX(-50%) translateY(0);
+                opacity: 1;
+            }
+            .toast-success {
+                border-left-color: #48bb78;
+            }
+            .toast-error {
+                border-left-color: #f56565;
+            }
+            .toast-warning {
+                border-left-color: #ed8936;
+            }
+        </style>
+        <script>
+            // Toast Function
+            function showToast(message, type = 'info') {
+                const existingToast = document.querySelector('.toast-notification');
+                if (existingToast) existingToast.remove();
+
+                const toast = document.createElement('div');
+                toast.className = `toast-notification toast-${type}`;
+                let icon = 'info-circle';
+                if (type === 'success') icon = 'check-circle';
+                if (type === 'error') icon = 'exclamation-circle';
+                if (type === 'warning') icon = 'exclamation-triangle';
+
+                toast.innerHTML = `<i class="fas fa-${icon}"></i><span>${message}</span>`;
+                document.body.appendChild(toast);
+                setTimeout(() => toast.classList.add('show'), 10);
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    setTimeout(() => {
+                        if (toast.parentNode) toast.remove();
+                    }, 300);
+                }, 4000);
+            }
+
+            // Input Filters
+            document.getElementById('username').addEventListener('input', function(e) {
+                this.value = this.value.toLowerCase().replace(/[^a-z0-9]/g, '').substring(0, 16);
+            });
+
+            // Form Submission
+            document.getElementById('checkoutForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const username = document.getElementById('username').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const agree = document.getElementById('agree').checked;
+
+                if (!agree) {
+                    showToast('Harap setujui syarat & ketentuan', 'error');
+                    return;
+                }
+
+                // Cek token dari variabel global atau ambil dari elemen input hidden turnstile
+                // Cloudflare otomatis membuat input hidden bernama 'cf-turnstile-response'
+                const form = e.target;
+                const formData = new FormData(form);
+                const token = formData.get('cf-turnstile-response') || window.turnstileToken;
+
+                if (!token) {
+                    showToast('Silakan verifikasi keamanan (Cloudflare)', 'error');
+                    return;
+                }
+
+                const btn = document.getElementById('submitBtn');
+                const originalHTML = btn.innerHTML;
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Memproses...</span>';
+
+                try {
+                    const response = await fetch('/api/payment/create', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            plan: '6gb',
+                            username,
+                            email,
+                            recaptchaResponse: token // Kirim token Cloudflare ke backend
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        showToast('Order berhasil dibuat!', 'success');
+                        setTimeout(() => {
+                            sessionStorage.setItem('paymentData', JSON.stringify(data));
+                            window.location.href = `/payment/${data.orderId}`;
+                        }, 1500);
+                    } else {
+                        throw new Error(data.message || 'Gagal membuat order');
+                    }
+                } catch (err) {
+                    console.error(err);
+                    showToast(err.message || 'Koneksi bermasalah', 'error');
+                    btn.disabled = false;
+                    btn.innerHTML = originalHTML;
+                    // Reset Turnstile kalau gagal biar user coba lagi
+                    if (window.turnstile) window.turnstile.reset();
+                }
+            });
+            console.log('JeromeGPT Checkout (Cloudflare Edition) Ready');
+        </script>
+    </main>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-terminal"></i> JeromeGPT</h3>
+                    <p>Platform hosting premium generasi berikutnya. Stabilitas tanpa kompromi.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="/"><i class="fas fa-chevron-right"></i> Beranda</a>
+                    <a href="/plans"><i class="fas fa-chevron-right"></i> Deploy Server</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <a href="https://wa.me/6281234567890" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                    <a href="https://t.me/jeromegpt" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>
+                    <a href="mailto:support@jeromegpt.com"><i class="fas fa-envelope"></i> Email</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 JeromeGPT. Powered by Future Tech.</p>
+            </div>
+        </div>
+    </footer>
+    <!-- Particles.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.3/particles.min.js"></script>
+    <!-- Terminal Effects JavaScript -->
+    <script src="/js/terminal-effects.js"></script>
+    <!-- Initialize Particles -->
+    <script>
+        particlesJS('particles-js', {
+            particles: {
+                number: {
+                    value: 80,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: '#3b82f6'
+                },
+                shape: {
+                    type: 'circle',
+                    stroke: {
+                        width: 0,
+                        color: '#000000'
+                    }
+                },
+                opacity: {
+                    value: 0.3,
+                    random: true,
+                    anim: {
+                        enable: true,
+                        speed: 1,
+                        opacity_min: 0.1,
+                        sync: false
+                    }
+                },
+                size: {
+                    value: 3,
+                    random: true,
+                    anim: {
+                        enable: true,
+                        speed: 2,
+                        size_min: 0.1,
+                        sync: false
+                    }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: '#3b82f6',
+                    opacity: 0.2,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 1,
+                    direction: 'none',
+                    random: false,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false,
+                    attract: {
+                        enable: false,
+                        rotateX: 600,
+                        rotateY: 1200
+                    }
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: 'grab'
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: 'push'
+                    },
+                    resize: true
+                },
+                modes: {
+                    grab: {
+                        distance: 140,
+                        line_linked: {
+                            opacity: 0.5
+                        }
+                    },
+                    push: {
+                        particles_nb: 4
+                    }
+                }
+            },
+            retina_detect: true
+        });
+    </script>
+    <script>
+        // Theme Switcher Script
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = themeToggle.querySelector('i');
+            const themeLabel = themeToggle.querySelector('.theme-label');
+
+            // Check for saved theme preference
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            setTheme(savedTheme);
+
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = document.body.classList.contains('light-theme') ? 'light' : 'dark';
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                setTheme(newTheme);
+                localStorage.setItem('theme', newTheme);
+            });
+
+            function setTheme(theme) {
+                if (theme === 'light') {
+                    document.body.classList.add('light-theme');
+                    themeIcon.className = 'fas fa-sun';
+                    themeLabel.textContent = 'Light';
+                    themeToggle.setAttribute('aria-label', 'Switch to dark theme');
+                    // Update navbar background secara eksplisit
+                    const navbar = document.querySelector('.navbar');
+                    if (navbar) {
+                        navbar.style.background = 'rgba(248, 250, 252, 0.95)';
+                    }
+                    // Update particles untuk light theme
+                    updateParticlesTheme('light');
+                } else {
+                    document.body.classList.remove('light-theme');
+                    themeIcon.className = 'fas fa-moon';
+                    themeLabel.textContent = 'Dark';
+                    themeToggle.setAttribute('aria-label', 'Switch to light theme');
+                    // Reset navbar ke default
+                    const navbar = document.querySelector('.navbar');
+                    if (navbar) {
+                        navbar.style.background = '';
+                    }
+                    // Update particles untuk dark theme
+                    updateParticlesTheme('dark');
+                }
+            }
+
+            // Fungsi untuk update particles berdasarkan tema
+            function updateParticlesTheme(theme) {
+                if (typeof particlesJS !== 'undefined' && window.pJSDom && window.pJSDom.length > 0) {
+                    const pJS = window.pJSDom[0].pJS;
+                    if (theme === 'light') {
+                        pJS.particles.color.value = "#3b82f6";
+                        pJS.particles.line_linked.color = "#3b82f6";
+                    } else {
+                        pJS.particles.color.value = "#06b6d4";
+                        pJS.particles.line_linked.color = "#06b6d4";
+                    }
+                    pJS.fn.particlesRefresh();
+                }
+            }
+
+            // Listen for system theme changes
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            prefersDarkScheme.addEventListener('change', e => {
+                if (!localStorage.getItem('theme')) {
+                    setTheme(e.matches ? 'dark' : 'light');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
